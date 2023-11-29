@@ -1,5 +1,13 @@
-#college-map{
-    width: 600px;
-    height: 500px;
+#bridge-map{
+    width: 700px;
+    height: 700px;
     border: 3px darkblue;
+}
+
+body {
+    background-color: lightgrey;
+}
+h1{
+    border: 2rem lightcoral;
+    text-align: center;
 }

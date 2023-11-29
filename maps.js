@@ -1,49 +1,50 @@
-let metroAreaCenterCoordinates = [44.96, -93.2]
-let zoomLevel = 9 // 1 = whole world and 20 = city blocks
+let Area = [40.0, -98.5]
+let zoomLevel = 4// 1 = whole world and 20 = city blocks
 
-let map = L.map('college-map').setView(metroAreaCenterCoordinates, zoomLevel)
+let map = L.map('bridge-map').setView(Area, zoomLevel)
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
 
-campuses =  [
-    {"name": "Minneapolis College", "website": "https://minneapolis.edu", "coordinates": [44.9724, -93.2844] },
-    {"name": "Saint Paul College", "website": "https://saintpaul.edu", "coordinates": [44.94839, -93.1099] },
-    {"name": "Normandale Community College", "website": "https://normandale.edu", "coordinates": [44.8297, -93.3312] },
-    {"name": "North Hennepin Community College", "website": "https://nhcc.edu", "coordinates": [45.1054232,-93.3767558] },
-    {"name": "Century College", "website": "https://www.century.edu/", "coordinates": [45.0438494,-92.9862026] }
+bridges =  [  // the 5 bridges
+
+    {name: 'Verrazano-Narrows Bridge', location: [40.6066, -74.0447], span: '1298.4 meters', city: 'New York, NY',},
+    {name: 'Golden Gate Bridge', location: [37.8199, -122.4783], span: '1280.2 meters', city: 'San Francisco and Marin, CA',},
+    {name: 'Mackinac Bridge', location: [45.8174, -84.7278],span: '1158.0 meters', city: 'Mackinaw and St Ignace, MI',},
+    {name: 'George Washington Bridge', location: [40.8517, -73.9527], span: '1067.0 meters', city: 'New York, NY and New Jersey, NJ',},
+    {name: 'Tacoma Narrows Bridge', location: [47.269, -122.5517], span: '853.44 meters', city: 'Tacoma and Kitsap, WA',},
+
 ]
-campuses.forEach(function (collegeCampus) {  // the forEach loop creates an array over each campus in the campuses
-    let markerText = `${collegeCampus.name}<br><a href="${collegeCampus.website}">Website</a>`  // this creates a variable inside the loop
-    // containing campus name and a link to the website
-    L.marker(collegeCampus.coordinates).bindPopup(markerText).addTo(map)
-
-})
-
-
-let mctcCoordinates = [44.9724, -93.2844]  // adding mctc coordinates to the map
-let mctcMarker = L.marker(mctcCoordinates).bindPopup('Minneapolis College <br><a href="http://minneapolis.edu">Website</a>')
-    .addTo(map)  // adding markers to our maps so we know exactly
-                                                        // where the location is
- // bind popup creates a popup tag for the location on the map
+bridges.forEach(function (bridges) {  // the forEach loop creates an array over each campus in the campuses
+    let bridgeName = bridges.name;
+    let bridgeCity = bridges.city;
+    let bridgeLocation = bridges.location;
+    let bridgeSpan = bridges.span;
+    let largestBridgeIcon = L.icon ({
+        iconUrl: 'bridge.png',
+        iconAnchor: [30, 30],
+        iconSize: [30, 30],
+    })
 
 
-let stPaulCoordinates = [44.9483, -93.1099]
-let stPaulMarker = L.marker(stPaulCoordinates)
-    .bindPopup('St Paul College<br><a href="https://saintpaul.edu"> Website</a>')
-    .addTo(map)  // adding markers to our maps so we know exactly where the location is
+    // if (parseFloat(bridgeSpan) === largestBridge) {
+        L.marker(bridgeLocation, {
+            icon: largestBridgeIcon,
+        })
+            .bindPopup(
+                `<br>${bridgeName}</br><br>${bridgeCity}</br><br>${bridgeSpan}</br><b>Currently the largest bridge!</b>`
+            )
+            .addTo(map)
 
-// Adding Normandale college & coordinates
-
-let normandaleCoordinates =[44.8297, -93.3312]
-let normandaleMarker = L.marker(normandaleCoordinates)
-    .bindPopup('Normandale Community College<br><a href="https://www.normandale.edu"> Website</a>')
-    .addTo(map)
-
-let metroAreaCircle = L.circle(metroAreaCenterCoordinates, {
-        color: 'grey',
-        radius: 30000,
-        fill0pacity: 0.2}) .bindPopup('Twin Cities Metro Area')
-    .addTo(map)
+    // } else {
+    //     L.marker(bridgeLocation, {
+    //         icon: bridgeIcon,
+    //     })
+    //         .bindPopup(
+    //             `<br>${bridgeName}</br><br>${bridgeCity}</br><br>${bridgeSpan}</br>`
+    //         )
+    //         .addTo(map);
+    // }
+});
